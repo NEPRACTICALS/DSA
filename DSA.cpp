@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <limits>
 using namespace std;
 // This is a linked list for Patient records with patient_id, name, dob, gender
 class Patient
@@ -53,7 +54,7 @@ public:
         this->next = NULL;
     }
 };
-
+// first check if the patientID is not already present in the list
 bool checkPatientId(Patient *&head, int id)
 {
     Patient *temp = head;
@@ -235,6 +236,21 @@ void displayDoctors(Doctor *&head)
         temp = temp->next;
     }
 }
+// check number
+void check_number_input(int &num){
+    while(true)
+    {
+        if(cin.fail())
+        {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+            cerr<<"input must be a number: "<<endl;
+            cin>>num;
+        }
+        if(!cin.fail())
+            break;
+    }
+}
 int main()
 {
     // The Main function will run according to the following Menu :
@@ -244,15 +260,16 @@ int main()
     // 4. Display all patients
     // 5. Display all doctors
     // 6. Display all appointments
-    // 7. Exit
+    // 7. Exit the program
     int choice;
     Patient *patientHead = NULL;
     Doctor *doctorHead = NULL;
     Appointment *appHead = NULL;
     // WELCOME PAGE  OF RUHENGERI HOSPITAL MANAGEMENT SYSYTEM
-    std::cout << "=============================Welcome RUHENGERI HOSPITAL MANAGEMENT SYSYTEM !================" << endl;
+    std::cout << "============================= WELCOME RUHENGERI HOSPITAL MANAGEMENT SYSYTEM !================" << endl;
     std::cout << "   ============================= ============================= ============================= " << endl;
     std::cout << "   ============================= DEVELOPED ============================= BY ============================= MIREILLE" << endl;
+    std::cout << "   ============================= MENU ============================= " << endl;
     while (true)
     {
         std::cout << "1. Add a new patient" << endl;
@@ -264,6 +281,8 @@ int main()
         std::cout << "7. Exit" << endl;
         std::cout << "Enter your choice: ";
         cin >> choice;
+        check_number_input(choice);
+
         switch (choice)
         {
         case 1:
@@ -302,19 +321,19 @@ int main()
         }
         case 3:
         {
-            int id, p_id, d_id;
-            string a_date;
+            int id, patient_id, doctor_id;
+            string appointment_date;
             std::cout << "========================== APPOINTMENT REGISTRATION ======================= " << endl;
             std::cout << "------------------------" << endl;
             std::cout << "Enter appointment_id: ";
             cin >> id;
             std::cout << "Enter patient_id: ";
-            cin >> p_id;
+            cin >> patient_id;
             std::cout << "Enter doctor_id: ";
-            cin >> d_id;
+            cin >> doctor_id;
             std::cout << "Enter appointment date (YYYY-MM-DD): ";
-            cin >> a_date;
-            addAppointment(appHead, patientHead, doctorHead, id, p_id, d_id, a_date);
+            cin >> appointment_date;
+            addAppointment(appHead, patientHead, doctorHead, id, patient_id, doctor_id, appointment_date);
             break;
         }
         case 4:
